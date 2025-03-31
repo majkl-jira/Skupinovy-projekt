@@ -1,18 +1,16 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { Button } from './components/ui/button'
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { HomePage, BlogPage, AboutAuthor, Reviews } from "./Pages.jsx";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <>
-    <Button>
-    </Button>
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/blog/:id" element={<BlogPage />} />
+        <Route path="/o-autorovi" element={<AboutAuthor />} />
+        <Route path="/recenze" element={<Reviews />} />
+      </Routes>
+    </Router>
+  );
 }
-
-export default App
