@@ -1,5 +1,5 @@
 import { Calendar, Link, Map } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 
 export default function BlogCard({ blog }) {
   return (
@@ -7,7 +7,7 @@ export default function BlogCard({ blog }) {
       <div className="flex flex-col h-full">
         <div className="relative w-full h-48">
           <img
-            src="/background.jpg"
+            src="/blogPostBgr.jpg"
             className="object-cover h-full w-full"
           ></img>
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/50">

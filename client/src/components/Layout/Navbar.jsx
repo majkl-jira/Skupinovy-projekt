@@ -12,20 +12,24 @@ const navlink = [
     route: "/",
   },
   {
-    name: "Blog",
-    route: "/blog",
+    name: "Blogy",
+    route: "/blogsView",
   },
   {
     name: "Galerie",
     route: "/galerie",
+  },
+  {
+    name: "Admin view",
+    route: "/adminView",
   },
 ];
 
 export default function Navbar() {
   return (
     <div className="fixed top-0 left-0 right-0 z-50 bg-black/90">
-      <div className="container mx-auto px-4 flex items-center justify-between h-12">
-        <p>Blog Americano</p>
+      <div className="container mx-auto px-4 flex items-center justify-between h-12 font-bold font-sans">
+        <p>Na cestě za snem</p>
         <div className="md:flex items-center gap-6">
           <NavigationMenu>
             <NavigationMenuList>
