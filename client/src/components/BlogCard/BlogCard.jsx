@@ -1,7 +1,15 @@
 import { Calendar, Link, Map } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export default function BlogCard({ blog }) {
+
+const navigate = useNavigate();
+
+const handleOpenBlog = () => {
+  navigate(`/blogpost/${blog.id}`)
+}
+
   return (
     <div className="relative rounded-sm">
       <div className="flex flex-col h-full">
@@ -18,7 +26,7 @@ export default function BlogCard({ blog }) {
                   <p>{blog.date}</p>
                 </div>
                 <div className="flex items-center">
-                  <Button>Otevrit</Button>
+                  <Button onClick={handleOpenBlog}>Otevrit</Button>
                 </div>
               </div>
             </div>
