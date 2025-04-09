@@ -13,16 +13,13 @@ const navlink = [
   },
   {
     name: "Blogy",
-    route: "/blogsView",
+    route: "/blogs",
   },
   {
     name: "Galerie",
     route: "/galerie",
   },
-  {
-    name: "Admin view",
-    route: "/adminView",
-  },
+
 ];
 
 export default function Navbar() {

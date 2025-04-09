@@ -4,16 +4,17 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require("cors")
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+const { type } = require('os');
 mongoose
-.connect(`mongodb+srv://admin:adminadmin@cluster0.ulr9m.mongodb.net/Blog-o-Americe?retryWrites=true&w=majority&appName=Cluster0`)
+.connect(`mongodb+srv://admin:adminadmin@cluster0.ceh6l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`)
 .then(() => console.log("Database connected"))
 .catch(() => console.log(err));
 
+const app = express();
 
-const commentsRouter = require('./routes/comments');
+const usersRouter = require("./routes/users");
 
-var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,7 +27,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use("/comments", commentsRouter);
+
+app.use("/users", cors(), usersRouter);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -43,5 +47,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+app.listen(5000, () => console.log("server běží na 5000"))
 
 module.exports = app;

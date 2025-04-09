@@ -7,17 +7,20 @@ const blogs = [
   {
     id : 0,
     name : "Studim v USA",
-    date : "12.6.2024"
+    date : "12.6.2024",
+    image: "blogPreView1.jpg"
   },
   {
     id : 1,
     name : "Sporty na střední škole",
-    date : "18.7.2024"
+    date : "18.7.2024",
+    image: "blogPreView2.jpg"
   },
   {
     id : 2,
     name : "Kulturní rozdíly",
-    date : "23.3.2023"
+    date : "23.3.2023",
+    image: "blogPreView3.jpg"
   }
 ]
 
