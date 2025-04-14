@@ -7,19 +7,19 @@ const blogs = [
     id : 0,
     name : "Studim v USA",
     date : "12.6.2024",
-    image: "blogPreView1.jpg"
+    image: "/images/blogPreView1.jpg"
   },
   {
     id : 1,
     name : "Sporty na střední škole",
     date : "18.7.2024",
-    image: "blogPreView2.jpg"
+    image: "/images/blogPreView2.jpg"
   },
   {
     id : 2,
     name : "Kulturní rozdíly",
     date : "23.3.2023",
-    image: "blogPreView3.jpg"
+    image: "/images/blogPreView3.jpg"
   }
 ]
 
@@ -32,7 +32,7 @@ export default function HomePage() {
         <div className="aboslute inset-0 w-full h-full flex">
           <div className="absolute w-full h-full bg-cover bg-center">
             <img
-              src="/background1.jpeg"
+              src="/images/background1.jpeg"
               className="object-cover w-full h-full"
             ></img>
           </div>

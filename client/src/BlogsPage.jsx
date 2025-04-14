@@ -191,7 +191,7 @@ export default function BlogsPage() {
                     </div>
                   </CardContent>
                   <CardFooter>
-                    <Button onClick={handleLogin}>Save password</Button>
+                    <Button onClick={handleLogin}>Login</Button>
                   </CardFooter>
                 </Card>
               </TabsContent>
