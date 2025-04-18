@@ -24,6 +24,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+//výchozí konfigurace pro axios
+axios.defaults.withCredentials = true;
+
 export default function BlogsPage() {
   const navigate = useNavigate()
   const [values, setValues] = useState({
@@ -31,52 +34,69 @@ export default function BlogsPage() {
     email: "",
     password: "",
   });
+  
   const handleRegister = async () => {
-    const createUser = await axios.post(
-      "http://localhost:5000/users/register",
-      {
-        name: values.name,
-        email: values.email,
-        password: values.password,
+    try {
+      const createUser = await axios.post(
+        "http://localhost:5000/users/register",
+        {
+          name: values.name,
+          email: values.email,
+          password: values.password,
+        }
+      );
+      if (createUser) {
+        console.log("Registrace úspěšná!");
       }
-    );
-    if (createUser) {
-      localStorage.setItem("token", createUser.data.token);
+      setValues({
+        name: "",
+        email: "",
+        password: "",
+      });
+    } catch (error) {
+      console.error("Chyba při registraci:", error);
     }
-    setValues({
-      name: "",
-      email: "",
-      password: "",
-    });
   };
 
-
   const handleLogin = async () => {
-    const createUser = await axios.post(
-      "http://localhost:5000/users/login",
-      {
-        email: values.email,
-        password: values.password,
+    try {
+      const createUser = await axios.post(
+        "http://localhost:5000/users/login",
+        {
+          email: values.email,
+          password: values.password,
+        }
+      );
+      if (createUser) {
+        console.log("Přihlášení úspěšné!");
       }
-    );
-    if (createUser) {
-      localStorage.setItem("token", createUser.data.token);
+      setValues({});
+    } catch (error) {
+      console.error("Chyba při přihlášení:", error);
     }
-    setValues({});
   };
 
   const handleCreate = async () => {
-    const isLoggedIn = await axios.get("http://localhost:5000/users/me",
-      {
-        headers : {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
+    try {
+      const isLoggedIn = await axios.get(
+        "http://localhost:5000/users/me"
+      );
+      if(isLoggedIn){
+        return navigate("/blog/pridat");
       }
-    )
-    if(isLoggedIn){
-      return navigate("/blog/pridat")
+    } catch (error) {
+      console.error("Chyba při ověřování přihlášení:", error);
     }
   }
+
+  const handleLogout = async () => {
+    try {
+        await axios.post("http://localhost:5000/users/logout");
+        console.log("Odhlášení úspěšné!");
+    } catch (error) {
+        console.error("Chyba při odhlašování:", error);
+    }
+  };
 
   return (
     <Layout>
@@ -122,7 +142,7 @@ export default function BlogsPage() {
                       />
                     </div>
                     <div className="space-y-1">
-                      <Label htmlFor="email">email</Label>
+                      <Label htmlFor="email">Email</Label>
                       <Input
                         id="email"
                         value={values.email}
@@ -138,6 +158,7 @@ export default function BlogsPage() {
                       <Label htmlFor="password">Password</Label>
                       <Input
                         id="password"
+                        type="password"
                         value={values.password}
                         onChange={(e) =>
                           setValues((prev) => ({
@@ -180,6 +201,7 @@ export default function BlogsPage() {
                       <Label htmlFor="password">Password</Label>
                       <Input
                         id="password"
+                        type="password"
                         value={values.password}
                         onChange={(e) =>
                           setValues((prev) => ({
@@ -202,6 +224,7 @@ export default function BlogsPage() {
           </DialogContent>
         </Dialog>
         <Button onClick={handleCreate}>Přidat</Button>
+        <Button onClick={handleLogout} className="ml-2">Odhlásit</Button>
       </main>
     </Layout>
   );
