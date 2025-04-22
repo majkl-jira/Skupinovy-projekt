@@ -1,47 +1,35 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Layout from "./components/Layout/Layout";
 import BlogCard from "./components/BlogCard/BlogCard";
 import { MapPin } from "lucide-react";
-
-const blogs = [
-  {
-    id: 0,
-    name: "Studium v USA",
-    date: "12.6.2024",
-    image: "/images/blogPreView1.jpg",
-  },
-  {
-    id: 1,
-    name: "Sporty na střední škole",
-    date: "18.7.2024",
-    image: "/images/blogPreView2.jpg",
-  },
-  {
-    id: 2,
-    name: "Kulturní rozdíly",
-    date: "23.3.2023",
-    image: "/images/blogPreView3.jpg",
-  },
-];
-
-const faqs = [
-  {
-    question: "Jak těžké je získat studentské vízum do USA?",
-    answer:
-      "Proces získání studentského víza zahrnuje několik kroků včetně přijetí na školu, získání formuláře I-20, zaplacení SEVIS poplatku a absolvování pohovoru na ambasádě. Je důležité začít s procesem několik měsíců předem.",
-  },
-  {
-    question: "Kolik stojí studium v USA?",
-    answer:
-      "Náklady na studim se mohou lišit záleží jestli pojedete na sokourkomou střední školu nebo na veřejnou za kterou nic neplatíte ale můj pobyt stál něco okolo 25 000$",
-  },
-  {
-    question: "Mohu při studiu v USA pracovat?",
-    answer:
-      "S studiním vízem J-1 nemůžete pracovat toto vízum je totoiž pouze určeno pro studium nikooliv pro práci proto doporučuji si našetřit peníze před odjezdem.",
-  },
-];
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 export default function HomePage() {
+  const [blogs, setBlogs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/blogs");
+        const sortedBlogs = response.data
+          .sort((a, b) => new Date(b.date) - new Date(a.date))
+          .slice(0, 3);
+
+        setBlogs(sortedBlogs);
+      } catch (error) {
+        console.error("Chyba při načítání blogů:", error);
+        setError("Nepodařilo se načíst blogy.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
   return (
     <Layout>
       <section className="relative w-full h-[80vh] flex items-center overflow-hidden">
@@ -65,7 +53,6 @@ export default function HomePage() {
           </p>
         </div>
       </section>
-
       <section className="py-16 bg-black text-white">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center gap-8">
@@ -98,17 +85,34 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      <section className="max-w-7xl mx-auto pt-11 px-4 p-11 flex flex-col justify-center bg-black text-white">
-        <div className="text-center w-full">
-          <h2 className="text-2xl md:text-4xl font-medium">Nejnovější Blogy</h2>
-          <p className="text-base md:text-lg text-gray-300">
-            Podívejte se na nejnovější příspěvky
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 w-full p-6 gap-3">
-          {blogs.map((blog) => (
-            <BlogCard blog={blog} key={blog.id}></BlogCard>
-          ))}
+      <section className="py-16 bg-black text-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center w-full mb-8">
+            <h2 className="text-2xl md:text-4xl font-medium">
+              Nejnovější Blogy
+            </h2>
+            <p className="text-base md:text-lg text-gray-300">
+              Podívejte se na nejnovější příspěvky
+            </p>
+          </div>
+          {isLoading ? (
+            <div className="text-center">Načítám blogy...</div>
+          ) : error ? (
+            <div className="text-center text-red-500">{error}</div>
+          ) : blogs.length === 0 ? (
+            <div className="text-center">Zatím zde nejsou žádné blogy.</div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {blogs.map((blog) => (
+                <BlogCard blog={blog} key={blog._id} />
+              ))}
+            </div>
+          )}
+          <div className="text-center mt-8">
+            <Link to="/blogs">
+              <Button variant="outline">Zobrazit všechny blogy</Button>
+            </Link>
+          </div>
         </div>
       </section>
       <section className="py-16 bg-black text-white">
@@ -117,15 +121,34 @@ export default function HomePage() {
             Často kladené otázky
           </h2>
           <div className="space-y-6 max-w-3xl mx-auto">
-            {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="bg-gray-900 p-6 rounded-lg border border-gray-800"
-              >
-                <h3 className="text-xl font-semibold mb-3">{faq.question}</h3>
-                <p className="text-gray-300">{faq.answer}</p>
-              </div>
-            ))}
+            <div className="bg-gray-900 p-6 rounded-lg border border-gray-800">
+              <h3 className="text-xl font-semibold mb-3">
+                Jak těžké je získat studentské vízum do USA?
+              </h3>
+              <p className="text-gray-300">
+                Proces získání studentského víza zahrnuje několik kroků včetně
+                přijetí na školu, získání formuláře I-20, zaplacení SEVIS
+                poplatku a absolvování pohovoru na ambasádě. Je důležité začít s
+                procesem několik měsíců předem.
+              </p>
+            </div>
+            <div className="bg-gray-900 p-6 rounded-lg border border-gray-800">
+              <h3 className="text-xl font-semibold mb-3">
+                Kolik stojí studium v USA?
+              </h3>
+              <p className="text-gray-300">
+              Náklady na studim se mohou lišit záleží jestli pojedete na sokourkomou střední školu nebo na veřejnou za kterou nic neplatíte ale můj pobyt stál něco okolo 25 000$
+              </p>
+            </div>
+
+            <div className="bg-gray-900 p-6 rounded-lg border border-gray-800">
+              <h3 className="text-xl font-semibold mb-3">
+                Mohu při studiu v USA pracovat?
+              </h3>
+              <p className="text-gray-300">
+              S studiním vízem J-1 nemůžete pracovat toto vízum je totoiž pouze určeno pro studium nikooliv pro práci proto doporučuji si našetřit peníze před odjezdem.
+              </p>
+            </div>
           </div>
         </div>
       </section>
