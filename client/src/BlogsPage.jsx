@@ -151,10 +151,28 @@ export default function BlogsPage() {
   }
   return (
     <Layout>
-      <main className="max-w-screen mt-12 bg-black text-white">
+      
+      <section className="relative w-full h-[80vh] flex items-center overflow-hidden">
+        <div className="absolute inset-0 w-full h-full flex">
+          <div className="absolute w-full h-full bg-cover bg-center">
+            <img
+              src="/images/blogsbackground.jpg"
+              className="object-cover w-full h-full"
+              alt="Hero obrázek Blogů"
+            />
+          </div>
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
+        <div className="absolute px-16 max-w-xl text-left">
+          <h1 className="text-4xl md:text-6xl font-bold">Blogy</h1>
+          <p className="text-lg md:text-xl mt-4">
+            Zde najdete všechny blogy, které jsem napsal během svého studia v USA.
+          </p>
+        </div>
+      </section>
+      <main className="max-w-screen  bg-black text-white">
         <div className="container mx-auto px-4 py-8">
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold">Blogy</h1>
+          <div className="flex justify-end items-center mb-8">
             <div className="flex space-x-3">
               <Dialog>
                 <DialogTrigger asChild>
@@ -233,15 +251,14 @@ export default function BlogsPage() {
                     <TabsContent value="password">
                       <Card>
                         <CardHeader>
-                          <CardTitle>Password</CardTitle>
+                          <CardTitle>Login</CardTitle>
                           <CardDescription>
-                            Change your password here. After saving, you'll be
-                            logged out.
+                            Login to your account here. Click login when you're done.
                           </CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-2">
                           <div className="space-y-1">
-                            <Label htmlFor="email">email</Label>
+                            <Label htmlFor="email">Email</Label>
                             <Input
                               id="email"
                               value={values.email}
@@ -278,11 +295,10 @@ export default function BlogsPage() {
                 </DialogContent>
               </Dialog>
               {isAdmin && <Button onClick={handleCreate}>Přidat</Button>}
-              {isAdmin && (
                 <Button onClick={handleLogout} className="ml-2">
                   Odhlásit
                 </Button>
-              )}
+              
             </div>
           </div>
           {error && (

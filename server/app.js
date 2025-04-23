@@ -5,7 +5,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require("cors")
 const mongoose = require("mongoose");
-const { type } = require('os');
 mongoose
   .connect(`mongodb+srv://admin:adminadmin@cluster0.ceh6l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`)
   .then(() => console.log("Database connected"))
