@@ -170,7 +170,6 @@ export default function BlogsPage() {
           </p>
         </div>
       </section>
-      <main className="max-w-screen  bg-black text-white">
         <div className="container mx-auto px-4 py-8">
           <div className="flex justify-end items-center mb-8">
             <div className="flex space-x-3">
@@ -318,7 +317,6 @@ export default function BlogsPage() {
             </div>
           )}
         </div>
-      </main>
     </Layout>
   );
 }

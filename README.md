@@ -52,10 +52,6 @@ Backend API na `http://localhost:5000`
 
 Ročníkový projekt vznikl s cílem propojit znalosti z frontendového i backendového vývoje.  
 Zaměřil jsem se na funkčnost, čistotu kódu a přehledný uživatelský interface.  
-Projekt lze snadno rozšířit o další funkce (komentáře, vyhledávání, notifikace...).
 
----
 
-## 📜 Licence
 
-MIT – projekt je volně použitelný pro vzdělávací i osobní účely.
