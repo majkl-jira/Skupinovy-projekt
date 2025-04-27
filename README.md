@@ -35,7 +35,7 @@ Cílem bylo vytvořit plně funkční fullstack webovou aplikaci se zaměřením
 # Backend
 cd server
 npm install
-npm run dev
+npm start
 
 # Frontend
 cd ../client
