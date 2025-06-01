@@ -1,11 +1,15 @@
 const mongoose = require("mongoose");
 
-const blogSchema = new mongoose.Schema({
-  title: {
+const recipeSchema = new mongoose.Schema({
+  name: {
     type: String,
     required: true
   },
-  content: {
+  description: {
+    type: String,
+    required: true
+  },
+  instructions: {
     type: String,
     required: true
   },
@@ -13,10 +17,9 @@ const blogSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  author: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
+  chef: {
+    type: String,
+    default: "Anonym"
   },
   date: {
     type: Date,
@@ -25,4 +28,4 @@ const blogSchema = new mongoose.Schema({
   tags: [String]
 });
 
-module.exports = mongoose.model("Blog", blogSchema);
+module.exports = mongoose.model("recipe", recipeSchema);

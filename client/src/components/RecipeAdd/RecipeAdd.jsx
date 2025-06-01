@@ -1,55 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
-import Navbar from "@/components/Layout/Navbar";
+import { useNavigate } from "react-router-dom";
+import Navbar from "../Layout/Navbar"; 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export default function BlogEdit() {
-  const { id } = useParams();
+export default function RecipeAdd() {
   const navigate = useNavigate();
-  const [isAdmin, setIsAdmin] = useState(false);
+
   const [formData, setFormData] = useState({
     title: "",
     content: "",
     image: "",
     tags: ""
   });
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
-  useEffect(() => {
-    const checkAdmin = async () => {
-      try {
-        const user = await axios.get("http://localhost:5000/users/me");
-        setIsAdmin(user.data.isAdmin);
-        if (!user.data.isAdmin) {
-          navigate("/blogs"); 
-        } else {
-          const blogRes = await axios.get(`http://localhost:5000/blogs/${id}`);
-          const blog = blogRes.data;
-          
-          setFormData({
-            title: blog.title,
-            content: blog.content,
-            image: blog.image,
-            tags: blog.tags ? blog.tags.join(', ') : ''
-          });
-          
-          setIsLoading(false);
-        }
-      } catch (error) {
-        console.error("Chyba při načítání dat:", error);
-        setError("Nepodařilo se načíst data blogu.");
-        setIsLoading(false);
-        setTimeout(() => navigate("/blogs"), 3000);
-      }
-    };
-    
-    checkAdmin();
-  }, [id, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -66,46 +34,28 @@ export default function BlogEdit() {
     setSuccess("");
     
     try {
-      const blogData = {
-        ...formData,
+      const recipeData = {
+        name: formData.title,
+        description: formData.content,      // možná popis receptu
+        instructions: formData.content,     // pokud backend má samostatné pole instructions, dej to tam taky
+        image: formData.image,
         tags: formData.tags.split(",").map(tag => tag.trim()).filter(tag => tag)
       };
       
-      await axios.put(`http://localhost:5000/blogs/${id}`, blogData);
       
-      setSuccess("Blog byl úspěšně aktualizován!");
+      await axios.post("http://localhost:5000/recipes", recipeData);
+      
+      setSuccess("Recept byl úspěšně vytvořen!");
       setTimeout(() => {
-        navigate(`/blog/${id}`);
-      }, 2000);
+        navigate("/recepty");
+      }, 2000); 
     } catch (error) {
-      console.error("Chyba při aktualizaci blogu:", error);
-      setError("Blog se nepodařilo aktualizovat. Zkontrolujte zadané údaje.");
+      console.error("Chyba při ukládání receptu:", error);
+      setError("Recept se nepodařilo uložit. Zkontrolujte zadané údaje.");
     } finally {
       setIsLoading(false);
     }
   };
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-black">
-        <Navbar />
-        <div className="container mx-auto px-4 py-8 text-center text-white">
-          Načítám data blogu...
-        </div>
-      </div>
-    );
-  }
-
-  if (!isAdmin) {
-    return (
-      <div className="min-h-screen bg-black">
-        <Navbar />
-        <div className="container mx-auto px-4 py-8 text-center text-white">
-          Nemáte oprávnění upravovat blogy.
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-black">
@@ -113,13 +63,13 @@ export default function BlogEdit() {
       <div className="container mx-auto px-4 py-8 text-white">
         <div className="max-w-3xl mx-auto">
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-bold">Upravit blog</h1>
+            <h1 className="text-3xl font-bold">Přidat nový recept</h1>
             <Button 
               variant="outline" 
-              onClick={() => navigate(`/blog/${id}`)} 
+              onClick={() => navigate("/recepty")} 
               className="hover:bg-gray-800"
             >
-              Zrušit úpravy
+              Zrušit a vrátit se
             </Button>
           </div>
           
@@ -139,7 +89,7 @@ export default function BlogEdit() {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <Label htmlFor="title" className="block text-sm font-medium mb-1">
-                  Název blogu
+                  Název receptu
                 </Label>
                 <Input
                   id="title"
@@ -178,13 +128,13 @@ export default function BlogEdit() {
                   value={formData.tags}
                   onChange={handleChange}
                   className="w-full bg-gray-700 border-gray-600"
-                  placeholder="např. škola, kultura, jídlo"
+                  placeholder="např. italská, vegetariánská, rychlá"
                 />
               </div>
               
               <div>
                 <Label htmlFor="content" className="block text-sm font-medium mb-1">
-                  Obsah
+                  Postup / obsah receptu
                 </Label>
                 <textarea
                   id="content"
@@ -200,9 +150,9 @@ export default function BlogEdit() {
                 <Button 
                   type="submit"
                   disabled={isLoading}
-                  className="bg-blue-600 hover:bg-blue-700"
+                  className="bg-green-600 hover:bg-green-700"
                 >
-                  {isLoading ? "Ukládám..." : "Aktualizovat blog"}
+                  {isLoading ? "Ukládám..." : "Vytvořit recept"}
                 </Button>
               </div>
             </form>
