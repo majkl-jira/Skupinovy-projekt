@@ -82,7 +82,6 @@ export default function Navbar() {
               </NavigationMenuItem>
             ))}
 
-
             {/* Pokud není přihlášený */}
             {!isLoggedIn && (
               <NavigationMenuItem>
