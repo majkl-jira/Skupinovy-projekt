@@ -13,11 +13,6 @@ axios.defaults.withCredentials = true;
 
 const navlink = [
   { name: "O nás", route: "/" },
-  { name: "Hlavní chody", route: "/hlavni-chody" },
-  { name: "Dezerty", route: "/dezerty" },
-  { name: "Předkrmy", route: "/predkrmy" },
-  { name: "Polévky", route: "/polevky" },
-  { name: "Nápoje", route: "/napoje" },
   { name: "Kontakty", route: "/kontakty" },
   { name: "Recepty", route: "/recepty" },
 ];

@@ -1,15 +1,11 @@
 const mongoose = require("mongoose");
 
 const recipeSchema = new mongoose.Schema({
-  name: {
+  title: { 
     type: String,
     required: true
   },
-  description: {
-    type: String,
-    required: true
-  },
-  instructions: {
+  content: { 
     type: String,
     required: true
   },
@@ -17,15 +13,21 @@ const recipeSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  chef: {
-    type: String,
-    default: "Anonym"
+  author: { 
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   },
   date: {
     type: Date,
     default: Date.now
   },
+  category: {
+    type: String,
+    enum: ["hlavni-chody", "dezerty", "predkrmy", "polevky", "napoje"],
+    required: true
+  },
   tags: [String]
 });
 
-module.exports = mongoose.model("recipe", recipeSchema);
+module.exports = mongoose.model("Recipe", recipeSchema); 

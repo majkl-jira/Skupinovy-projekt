@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../Layout/Navbar"; 
+import Navbar from "../Layout/Navbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,18 +13,20 @@ export default function RecipeAdd() {
     title: "",
     content: "",
     image: "",
-    tags: ""
+    tags: "",
+    category: "" 
   });
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value
-    });
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -32,23 +34,26 @@ export default function RecipeAdd() {
     setIsLoading(true);
     setError("");
     setSuccess("");
-    
+
     try {
       const recipeData = {
-        name: formData.title,
-        description: formData.content,      // možná popis receptu
-        instructions: formData.content,     // pokud backend má samostatné pole instructions, dej to tam taky
+        title: formData.title,
+        content: formData.content,
         image: formData.image,
-        tags: formData.tags.split(",").map(tag => tag.trim()).filter(tag => tag)
+        tags: formData.tags
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter((tag) => tag),
+        category: formData.category 
       };
-      
-      
-      await axios.post("http://localhost:5000/recipes", recipeData);
-      
+
+      await axios.post("http://localhost:5000/recipes", recipeData, {
+        withCredentials: true 
+      });
       setSuccess("Recept byl úspěšně vytvořen!");
       setTimeout(() => {
         navigate("/recepty");
-      }, 2000); 
+      }, 2000);
     } catch (error) {
       console.error("Chyba při ukládání receptu:", error);
       setError("Recept se nepodařilo uložit. Zkontrolujte zadané údaje.");
@@ -64,33 +69,31 @@ export default function RecipeAdd() {
         <div className="max-w-3xl mx-auto">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-3xl font-bold">Přidat nový recept</h1>
-            <Button 
-              variant="outline" 
-              onClick={() => navigate("/recepty")} 
+            <Button
+              variant="outline"
+              onClick={() => navigate("/recepty")}
               className="hover:bg-gray-800"
             >
               Zrušit a vrátit se
             </Button>
           </div>
-          
+
           {error && (
             <div className="bg-red-500/80 text-white p-4 rounded mb-4">
               {error}
             </div>
           )}
-          
+
           {success && (
             <div className="bg-green-500/80 text-white p-4 rounded mb-4">
               {success}
             </div>
           )}
-          
+
           <div className="bg-gray-800 rounded-lg p-6 shadow-lg">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <Label htmlFor="title" className="block text-sm font-medium mb-1">
-                  Název receptu
-                </Label>
+                <Label htmlFor="title">Název receptu</Label>
                 <Input
                   id="title"
                   name="title"
@@ -101,11 +104,9 @@ export default function RecipeAdd() {
                   required
                 />
               </div>
-              
+
               <div>
-                <Label htmlFor="image" className="block text-sm font-medium mb-1">
-                  URL obrázku
-                </Label>
+                <Label htmlFor="image">URL obrázku</Label>
                 <Input
                   id="image"
                   name="image"
@@ -116,11 +117,9 @@ export default function RecipeAdd() {
                   required
                 />
               </div>
-              
+
               <div>
-                <Label htmlFor="tags" className="block text-sm font-medium mb-1">
-                  Tagy (oddělené čárkou)
-                </Label>
+                <Label htmlFor="tags">Tagy (oddělené čárkou)</Label>
                 <Input
                   id="tags"
                   name="tags"
@@ -131,11 +130,29 @@ export default function RecipeAdd() {
                   placeholder="např. italská, vegetariánská, rychlá"
                 />
               </div>
-              
+
+              {/* ✅ Výběr kategorie */}
               <div>
-                <Label htmlFor="content" className="block text-sm font-medium mb-1">
-                  Postup / obsah receptu
-                </Label>
+                <Label htmlFor="category">Kategorie receptu</Label>
+                <select
+                  id="category"
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
+                  required
+                  className="w-full bg-gray-700 border border-gray-600 rounded p-2 text-white"
+                >
+                  <option value="">-- Vyberte kategorii --</option>
+                  <option value="hlavni-chody">Hlavní chody</option>
+                  <option value="dezerty">Dezerty</option>
+                  <option value="predkrmy">Předkrmy</option>
+                  <option value="polevky">Polévky</option>
+                  <option value="napoje">Nápoje</option>
+                </select>
+              </div>
+
+              <div>
+                <Label htmlFor="content">Postup / obsah receptu</Label>
                 <textarea
                   id="content"
                   name="content"
@@ -145,9 +162,9 @@ export default function RecipeAdd() {
                   required
                 />
               </div>
-              
+
               <div className="flex justify-end">
-                <Button 
+                <Button
                   type="submit"
                   disabled={isLoading}
                   className="bg-green-600 hover:bg-green-700"
