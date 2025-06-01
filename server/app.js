@@ -2,6 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
@@ -23,6 +24,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));
+app.use(cookieParser());
 
 
 // CORS nastavení (otevřené pro všechny, můžeš upravit)
