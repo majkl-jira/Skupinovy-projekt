@@ -1,4 +1,4 @@
-const Recipe = require('../models/recipe'); // uprav cestu podle názvu souboru/modelu
+const Recipe = require('../models/recipe');
 
 exports.getAllRecipes = async (req, res) => {
   try {
