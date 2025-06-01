@@ -53,10 +53,10 @@ export default function Footer() {
           </div>
           
           <div>
-            <h3 className="text-xl font-bold mb-4">O blogu</h3>
+            <h3 className="text-xl font-bold mb-4">Vaření je radost</h3>
             <p className="mb-4">
-              Tento blog se zaměřuje na moje zkušenosti se studiem v USA.
-              Dozvíte se zde informace o školství, kultuře a životě v zahraničí.
+                a tahle stránka je plná chutné inspirace.
+                Najdete tu osvědčené recepty, tipy do kuchyně a nápady pro každodenní i výjimečné chvíle.
             </p>
           </div>
           
@@ -105,7 +105,7 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-white/20 mt-8 pt-6 text-center">
-          <p>© {new Date().getFullYear()} Blog o studiu v USA. Všechna práva vyhrazena.</p>
+          <p>© {new Date().getFullYear()} Všechna práva vyhrazena.</p>
         </div>
       </div>
     </footer>
