@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-import Layout from "./components/Layout/Layout";
+import Layout from "@/components/Layout/Layout";
 import { Button } from "@/components/ui/button";
 import {
   ArrowLeft,
@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 
 export default function RecipeDetail() {
+  
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -26,6 +27,7 @@ export default function RecipeDetail() {
       try {
         const res = await axios.get(`http://localhost:5000/recipes/${id}`);
         setRecipe(res.data);
+        
 
         try {
           const userRes = await axios.get("http://localhost:5000/users/me", {

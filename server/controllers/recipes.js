@@ -13,7 +13,7 @@ exports.getAllRecipes = async (req, res) => {
       .sort({ date: -1 })
       .populate("author", "name");
 
-    res.status(200).json(recipes);
+    res.status(200).json({ recipes });
   } catch (error) {
     console.error("Chyba při načítání receptů:", error);
     res.status(500).json({ message: "Chyba serveru" });
@@ -30,7 +30,7 @@ exports.getRecipeById = async (req, res) => {
       return res.status(404).json({ message: "Recept nenalezen" });
     }
 
-    res.status(200).json(recipe);
+    res.status(200).json({ recipe });
   } catch (error) {
     console.error("Chyba při načítání receptu:", error);
     res.status(500).json({ message: "Chyba serveru" });

@@ -60,7 +60,7 @@ export default function Navbar() {
   return (
     <div className="relative top-0 left-0 right-0 z-50 bg-white text-black shadow-md">
       <div className="container mx-auto px-4 flex items-center justify-between h-16 font-semibold">
-        <p className="text-xl font-bold">Restaurace</p>
+        <p className="text-xl font-bold">Receptárium</p>
         <NavigationMenu>
           <NavigationMenuList className="flex space-x-4">
             {/* Standardní odkazy */}

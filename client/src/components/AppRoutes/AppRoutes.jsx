@@ -1,6 +1,6 @@
 import RecipeAdd from "@/components/RecipeAdd/RecipeAdd";
 import HomePage from "@/HomePage";
-import RecipeDetail from "@/RecipesDetail";
+import RecipeDetail from "@/components/RecipeDetail/RecipeDetail";
 import RecipeEdit from "@/components/RecipeEdit/RecipeEdit";
 import RecipesPage from "@/RecipesPage";
 import AuthPage from "@/AuthPage";
@@ -20,7 +20,7 @@ const AppRoutes = () => {
 
         <Route path="/recepty" element={<RecipesPage />} />
         <Route path="/recepty/pridat" element={<RecipeAdd />} />
-  	    <Route path="/recepty/edit/:id" element={<RecipeEdit />} />
+  	    <Route path="/recept/edit/:id" element={<RecipeEdit />} />
         <Route path="/recepty/:id" element={<RecipeDetail />} />
         <Route path="/auth" element={<AuthPage />} />
 
