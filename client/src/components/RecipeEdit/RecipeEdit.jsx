@@ -15,7 +15,7 @@ export default function RecipeEdit() {
     content: "",
     image: "",
     tags: ""
-  });
+  }); 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -24,7 +24,7 @@ export default function RecipeEdit() {
     const fetchRecipe = async () => {
       try {
         const res = await axios.get(`http://localhost:5000/recipes/${id}`);
-        const recipe = res.data;
+        const recipe = res.data.recipe;
         setFormData({
           title: recipe.title,
           content: recipe.content,

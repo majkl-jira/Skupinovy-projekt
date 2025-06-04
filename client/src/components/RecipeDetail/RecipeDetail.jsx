@@ -26,7 +26,7 @@ export default function RecipeDetail() {
     const fetchRecipe = async () => {
       try {
         const res = await axios.get(`http://localhost:5000/recipes/${id}`);
-        setRecipe(res.data);
+        setRecipe(res.data.recipe);
         
 
         try {

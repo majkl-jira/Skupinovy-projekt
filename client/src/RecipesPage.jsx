@@ -28,7 +28,7 @@ export default function RecipePage() {
           : `http://localhost:5000/recipes`;
 
         const response = await axios.get(url);
-        setRecipes(response.data);
+        setRecipes(response.data.recipes);
         setError("");
       } catch (err) {
         console.error("Chyba při načítání receptů:", err);

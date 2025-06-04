@@ -38,7 +38,7 @@ export default function HomePage() {
         <div className="absolute inset-0 w-full h-full flex">
           <div className="absolute w-full h-full bg-cover bg-center">
             <img
-              src="/images/food.png"
+              src="/images/food.jpg"
               className="object-cover w-full h-full"
               alt="Pozadí s jídlem"
             />

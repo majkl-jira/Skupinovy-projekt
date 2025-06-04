@@ -61,7 +61,7 @@ export default function Footer() {
           </div>
           
           <div>
-            <h3 className="text-xl font-bold mb-4">Napište mi</h3>
+            <h3 className="text-xl font-bold mb-4">Napište nám</h3>
             
             {status.message && (
               <div 
