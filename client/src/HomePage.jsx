@@ -15,7 +15,7 @@ export default function HomePage() {
     const fetchRecipes = async () => {
       try {
         const response = await axios.get("http://localhost:5000/recipes");
-        const sortedRecipes = response.data
+        const sortedRecipes = response.data.recipes
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
           .slice(0, 4);
 
